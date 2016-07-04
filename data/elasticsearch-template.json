@@ -1,0 +1,1445 @@
+{
+    "order": 0,
+    "template": "junoslogs-*",
+    "settings": {
+        "index.refresh_interval": "5s",
+        "index":{
+           "analysis":{
+              "analyzer":{
+                 "lowercase_keyword":{
+		    "tokenizer" : "keyword",
+                    "filter":"lowercase"
+                 }
+              }
+           }
+        }
+    },
+    "aliases": {},
+    "mappings": {
+        "_default_": {
+            "dynamic_templates": [
+                {
+                    "message_field": {
+                        "mapping": {
+                            "index": "analyzed",
+                            "omit_norms": true,
+                            "type": "string"
+                        },
+                        "match": "message",
+                        "match_mapping_type": "string"
+                    }
+                },
+                {
+                    "string_fields": {
+                        "mapping": {
+                            "index": "analyzed",
+                            "analyzer": "lowercase_keyword",
+                            "omit_norms": true,
+                            "type": "string",
+                            "fields": {
+                                "raw": {
+                                    "index": "not_analyzed",
+                                    "ignore_above": 256,
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "match": "*",
+                        "match_mapping_type": "string"
+                    }
+                }
+            ],
+            "_all": {
+                "enabled": true,
+                "omit_norms": true
+            },
+            "properties": {
+                "@version": {
+                    "type": "string",
+                    "index": "not_analyzed",
+		    "doc_value": true
+                },
+                "geoip": {
+                    "dynamic": "true",
+                    "properties": {
+                        "location": {
+                            "type": "geo_point",
+			    "doc_value": true
+                        }
+                    }
+                }
+            }
+        },
+		"syslog": {
+                "dynamic_templates": [
+                    {
+                        "message_field": {
+                            "mapping": {
+                                "index": "analyzed",
+                                "omit_norms": true,
+                                "type": "string"
+                            },
+                            "match": "message",
+                            "match_mapping_type": "string"
+                        }
+                    },
+                    {
+                        "string_fields": {
+                            "mapping": {
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "omit_norms": true,
+                                "type": "string",
+                                "fields": {
+                                    "raw": {
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "match": "*",
+                            "match_mapping_type": "string"
+                        }
+                    }
+                ],
+                "_all": {
+                    "enabled": true,
+                    "omit_norms": true
+                },
+                "properties": {
+                    "@timestamp": {
+                        "type": "date",
+                        "format": "dateOptionalTime",
+                        "doc_values": true
+                    },
+                    "@version": {
+                        "type": "string",
+                        "index": "not_analyzed",
+                        "doc_values": true
+                    },
+                    "action": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "action_detail": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "application": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "application_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "argument": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "attack_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "bytes_from_client": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "bytes_from_server": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "junos_category": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "category_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "connection_hit_rate": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "context_hit_rate": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "context_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "context_value": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "context_value_hit_rate": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "current_value": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "ddos_application_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "destination_address": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "destination_interface_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "destination_port": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "destination_zone_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "device_id": {
+                       "type": "long",
+                       "doc_values": true
+                    },
+                    "domain_id": {
+                       "type": "long",
+                       "doc_values": true
+                    },
+                    "dst_geo": {
+                        "properties": {
+                            "area_code": {
+                                "type": "long",
+                                "doc_values": true
+                            },
+                            "city_name": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "continent_code": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "country_code2": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "country_code3": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "country_name": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "dma_code": {
+                                "type": "long",
+                                "doc_values": true
+                            },
+                            "ip": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            },
+                            "latitude": {
+                                "type": "double",
+                                "doc_values": true
+                            },
+                            "location": {
+                                "type": "double",
+                                "doc_values": true
+                            },
+                            "longitude": {
+                                "type": "double",
+                                "doc_values": true
+                            },
+                            "postal_code": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "real_region_name": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "region_name": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "timezone": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "dst_nat_rule_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "elapsed_time": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "encrypted": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "epoch_time": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "event_category": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "event_type": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "facility": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "facility_label": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "feed_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "filename": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "fpc_slot": {
+                        "type": "long"
+                    },
+                    "geoip": {
+                        "dynamic": "true",
+                        "properties": {
+                            "location": {
+                                "type": "geo_point",
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "host": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "icmp_type": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "inbound_bytes": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "inbound_packets": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "interface_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "ip_address": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "junos_oid": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "junos_service": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "logical_system_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        }
+                    },
+                    "message_type": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "nat_destination_address": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "nat_destination_port": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "nat_source_address": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "nat_source_port": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "nested_application": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "outbound_bytes": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "outbound_packets": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "packet_incoming_interface": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "packet_log_id": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "packets_from_client": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "packets_from_server": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "pic_slot": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "policy_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "priority": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "profile_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "protocol_id": {
+                        "type": "long"
+                    },
+                    "protocol_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "reason": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "repeat_count": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "roles": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "rule_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "rulebase_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "service_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "session_id_32": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "severity": {
+                        "type": "long",
+			"doc_values": true
+                    },
+                    "severity_label": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "source_address": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+			"doc_values": true
+                    },
+                    "source_interface_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "source_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "source_port": {
+                        "type": "long",
+			"doc_values": true
+                    },
+                    "source_zone_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "src_geo": {
+                        "properties": {
+                            "area_code": {
+                                "type": "long",
+				"doc_values": true
+                            },
+                            "city_name": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "continent_code": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "country_code2": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "country_code3": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "country_name": {
+                                "type": "string",
+                                "index": "analyzed",
+                                "analyzer": "lowercase_keyword",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "dma_code": {
+                                "type": "long"
+                            },
+                            "ip": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            },
+                            "latitude": {
+                                "type": "double",
+                                        "doc_values": true
+                            },
+                            "location": {
+                                "type": "double",
+                                        "doc_values": true
+                            },
+                            "longitude": {
+                                "type": "double",
+                                        "doc_values": true
+                            },
+                            "real_region_name": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "region_name": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            },
+                            "timezone": {
+                                "type": "string",
+                                "norms": {
+                                    "enabled": false
+                                },
+                                "fields": {
+                                    "raw": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "ignore_above": 256,
+                                        "doc_values": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "src_nat_rule_name": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "sub_category": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "syslog_hostname": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "syslog_pri": {
+                        "type": "string",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    },
+                    "syslog_timestamp": {
+                        "type": "date",
+                        "format": "dateOptionalTime",
+                        "doc_values": true
+                    },
+                    "tags": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "temporary_filename": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "threat_severity": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "time_count": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "time_period": {
+                        "type": "long",
+                        "doc_values": true
+                    },
+                    "time_scope": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "url": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                    "username": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "ignore_above": 256,
+                                "doc_values": true
+                            }
+                        }
+                    },
+                   "receiving_host": {
+                        "type": "string",
+                        "index": "analyzed",
+                        "analyzer": "lowercase_keyword",
+                        "norms": {
+                            "enabled": false
+                        },
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "doc_values": true
+                    } 
+                }
+            }
+    }
+}
