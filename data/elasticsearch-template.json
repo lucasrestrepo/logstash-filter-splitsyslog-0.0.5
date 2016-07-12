@@ -64,7 +64,6 @@
                     "properties": {
                         "location": {
                             "type": "geo_point",
-			    "doc_value": true
                         }
                     }
                 }
